@@ -5,62 +5,34 @@ import java.awt.GridLayout;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class monopolySetup {
+public class monopolySetup extends JPanel {
 
 	JFrame frame = new JFrame();
-	JPanel panel = new JPanel();
-	JLabel[] labels = new JLabel[100];
-	
+	Tile tiles[] = new Tile[40];
+	String names[] ={"go", "baltic", "chest", "medditaranian", "income tax", "reading railroad", "oriental", "vermont", "chance", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia"
+			, "pensylvania railroad", "st.James Place", "chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "B. and O. Railroad", "atlantic", "ventnor", "water Works",
+			"marvin Gardens", "go to jail", "pacific", "north Carolina", "chest", "Pensylvania", "short line", "chance", "park place", "luxury tax", "boardwalk"};
+	int cost[] = {60, 60, 100, 100, 120, 140, 150, 140, 160, 180, 180, 200, 220, 220, 240, 260, 260, 150, 280, 300, 300, 320, 350, 400};
+	Color colors[] = {new Color(20, 120, 50), new Color(66, 40, 14), new Color(20, 80, 140), new Color(66, 40, 14), new Color(147, 151, 143), new Color(255), new Color(50, 168, 168), new Color(166, 111, 50), 
+			new Color(50, 168, 168), new Color(50, 168, 168), new Color(255)};
 
+	
+	
+public monopolySetup() {
+	
+}
 	
 	public void Setup() {
 		frame.setSize(1100, 1100);
 		frame.setVisible(true);
-		frame.add(panel);
-		GridLayout gridLayout = new GridLayout(10, 10);
-		for(int i = 0; i<100; i++) {
-			labels[i] = new JLabel();
-			panel.add(labels[i]);
-			Border border = BorderFactory.createLineBorder(Color.black, 2);
-			labels[i].setBorder(border);
-			labels[i].setOpaque(true);
-			labels[i].setBackground(Color.BLACK);
-			labels[i].setHorizontalAlignment(SwingConstants.CENTER);
-			labels[i].setVerticalAlignment(SwingConstants.TOP);
-			labels[i].setFont(new Font(null).deriveFont(Font.BOLD, 12));
-			
-			if(i<10) {
-				labels[i].setBackground(Color.WHITE);
-			}
-			if(i%10 == 0) {
-				labels[i].setBackground(Color.WHITE);
-			}
-			if(i%10 == 9) {
-				labels[i].setBackground(Color.WHITE);
-			}
-			if(i>89) {
-				labels[i].setBackground(Color.WHITE);
-			}
-			if(i == 99) {
-				labels[i].setText("GO, get $200");
-				labels[i].setBackground(new Color(31, 61, 12));
-			}
-			if(i == 98) {
-				labels[i].setText("baltic, 60$");
-				labels[i].setBackground(new Color(66, 40, 14));
-			}
-			if(i == 97) {
-				labels[i].setText("Tax pay 200");
-				labels[i].setBackground(new Color(194, 24, 7));
-			}
-			if(i == 96) {
-				labels[i].setText("wyoming $60");
-				labels[i].setBackground(new Color(66, 40, 14));
-			}
-			
-		}
-		panel.setLayout(gridLayout);
-
+		frame.add(this);
+		this.setLayout(null);
+		
+		
+for(int i = 0; i<40; i++) {
+tiles[i] =  new Tile(cost[i], names[i], colors[i], true);
+}
+		
 		
 	}
 	
