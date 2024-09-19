@@ -1,16 +1,27 @@
+import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class monopoly {
+import javax.swing.*;
+
+public class monopoly extends JPanel {
+	monopolySetup s = new monopolySetup();
+	JFrame frame = new JFrame();
+	void setup() {
+		frame.setSize(1000, 1050);
+		frame.setVisible(true);
+		frame.add(s);
+		this.setLayout(null);
+	}
 
 	
-	
 	ArrayList<String> chararcters = new ArrayList<String>();
-	
+
 	int boardSpace = 0;
 	
 	public static void main(String[] args) {
-		monopolySetup s = new monopolySetup();
-		s.Setup();
+monopoly m = new monopoly();
+m.setup();
+
 	}
 
 }
