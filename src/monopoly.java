@@ -4,14 +4,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class monopoly extends JPanel {
-	monopolySetup s = new monopolySetup();
-	JFrame frame = new JFrame();
-	void setup() {
-		frame.setSize(1000, 1050);
-		frame.setVisible(true);
-		frame.add(s);
-		this.setLayout(null);
-	}
+
+
 
 	
 	ArrayList<String> chararcters = new ArrayList<String>();
@@ -20,7 +14,8 @@ public class monopoly extends JPanel {
 	
 	public static void main(String[] args) {
 monopoly m = new monopoly();
-m.setup();
+monopolySetup s = new monopolySetup();
+s.setup();
 
 	}
 

@@ -2,15 +2,26 @@ import java.awt.*;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class monopolySetup extends JPanel {
+public class monopolySetup extends JPanel implements ActionListener {
 
 	JFrame frame = new JFrame();
+	JLabel money = new JLabel();
+	int cash = 1500;
+	players p = new players();
+	int boardspace = 0;
+	int i = 0;
+	Random r = new Random();
+	
 	Tile tiles[] = new Tile[40];
-	String names[] ={"go", "baltic", "chest", "medditaranian", "income tax", "oriental", "vermont", "chance", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia"
+	JButton button = new JButton();
+	String names[] ={"go", "baltic", "chest", "medditaranian", "income tax", "oriental", "chance", "vermont", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia"
 			, "st.James Place", "chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic", "ventnor", "water Works",
 			"marvin Gardens", "go to jail", "pacific", "north Carolina", "chest", "Pensylvania", "chance", "park place", "luxury tax", "boardwalk"};
 	int cost[] = {0, 60, 0, 60, 0, 100, 0, 100, 120, 0, 140, 150, 140, 160, 180, 0, 180, 200, 0, 220, 0, 220, 240, 260, 260, 150, 280, 0, 300, 300, 0, 320, 0, 350, 0, 400};
@@ -24,36 +35,65 @@ public class monopolySetup extends JPanel {
 	
 	@Override
 public void paintComponent(Graphics g) {
-	System.out.println("" + cost.length);
-	System.out.println(xs.length);
-	System.out.println(ys.length);
 		draw(g);
-			Setup();
+			
+
 			
 
 	}
-public monopolySetup() {
-	
-}
-	
-	public void Setup() {
 
+	
+	public void setup() {
+		frame.setSize(1000, 1050);
+		frame.setVisible(true);
+		frame.add(this);
+		this.setLayout(null);
+		this.add(button);
+		this.add(p.one);
+		this.add(money);
+		p.one.setBounds(900, 900, 25, 25);
+		money.setBounds(150, 150, 200, 50);
+		money.setText("money: " + cash);
+		button.setBounds(500, 500, 100, 50);
+		p.one.setOpaque(true);
+		p.one.setBackground(Color.black);
+		button.setText("roll");
+		button.addActionListener(this);
 		
-for(int i = 0; i<36; i++) {
+for(i = 0; i<36; i++) {
 tiles[i] =  new Tile(cost[i], names[i], new Color(0), true, xs[i], ys[i]);
 }
-
-
 	
 }
+
+	
 	   public void draw(Graphics g) {
 		  
 		   for(int i = 0; i<36; i++) {
 			g.setColor(colors[i]);
 			   g.fillRect(xs[i], ys[i], 100, 100);
 			  g.setColor(Color.black);
-			   g.drawString("cost" + cost[i], xs[i] + 25, ys[i]+25);
+			  
+			  g.drawString("cost" + cost[i], xs[i] + 25, ys[i]+25);
 			   g.drawString(names[i], xs[i]+10, ys[i]+50);
 		  }
 	   }
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource() == button) {
+		int ran = r.nextInt(12)+1;
+		
+		boardspace += ran;
+		boardspace%=36;
+		String buying = JOptionPane.showInputDialog("buy " + names[boardspace] + " for " + cost[boardspace] + " dollars?");
+if(buying.equals("yes")) {
+	cash-=cost[boardspace];
+	money.setText("money: " + cash);
+}
+		System.out.println(boardspace);
+		p.one.setBounds(xs[boardspace], ys[boardspace], 25, 25);
+		}
+	}
 }
