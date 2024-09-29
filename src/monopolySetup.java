@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.*;
@@ -12,12 +13,17 @@ import javax.swing.border.Border;
 public class monopolySetup extends JPanel implements ActionListener {
 
 	JFrame frame = new JFrame();
+	ArrayList<properties> prop = new ArrayList<properties>();
+	ArrayList<boxes> b = new ArrayList<boxes>();
+	ArrayList<money> m = new ArrayList<money>();
 	JLabel money = new JLabel();
 	int cash = 1500;
-	players p = new players();
+	ArrayList<pieces> p = new ArrayList<pieces>();
+	
 	int boardspace = 0;
 	int i = 0;
 	Random r = new Random();
+
 	
 	Tile tiles[] = new Tile[40];
 	JButton button = new JButton();
@@ -49,14 +55,19 @@ public void paintComponent(Graphics g) {
 		frame.add(this);
 		this.setLayout(null);
 		this.add(button);
-		this.add(p.one);
+		for(int i = 0; i<4; i++) {
+			this.add();
+			p.pieces.setOpaque(true);
+			p.pieces.setBackground(Color.black);
+			p.pieces.setBounds(900, 900, 25, 25);
+		}
+		
 		this.add(money);
-		p.one.setBounds(900, 900, 25, 25);
+		
 		money.setBounds(150, 150, 200, 50);
 		money.setText("money: " + cash);
 		button.setBounds(500, 500, 100, 50);
-		p.one.setOpaque(true);
-		p.one.setBackground(Color.black);
+		
 		button.setText("roll");
 		button.addActionListener(this);
 		
@@ -87,13 +98,20 @@ tiles[i] =  new Tile(cost[i], names[i], new Color(0), true, xs[i], ys[i]);
 		
 		boardspace += ran;
 		boardspace%=36;
-		String buying = JOptionPane.showInputDialog("buy " + names[boardspace] + " for " + cost[boardspace] + " dollars?");
-if(buying.equals("yes")) {
-	cash-=cost[boardspace];
-	money.setText("money: " + cash);
-}
+
+		if(cost[boardspace] != 0) {
+			String buying = JOptionPane.showInputDialog("buy " + names[boardspace] + " for " + cost[boardspace] + " dollars?");
+			
+			if(buying.equals("yes")) {
+				cash-=cost[boardspace];
+				money.setText("money: " + cash);
+				oneProps.add(names[boardspace]);
+				System.out.println(oneProps.size());
+			}
+			}
+
 		System.out.println(boardspace);
-		p.one.setBounds(xs[boardspace], ys[boardspace], 25, 25);
+		p.piece.setBounds(xs[boardspace], ys[boardspace], 25, 25);
 		}
 	}
 }
