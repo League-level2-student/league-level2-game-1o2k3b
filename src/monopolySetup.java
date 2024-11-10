@@ -16,17 +16,19 @@ public class monopolySetup extends JPanel implements ActionListener {
 	money mo = new money(1500);
 	pieces piece = new pieces(new JLabel());
 	properties pro = new properties("");
-	players play = new players(piece, pro, box, mo);
+PropertyDisplay screen = new PropertyDisplay();
+
+	players play = new players(piece, pro, box, mo, screen);
 	JFrame frame = new JFrame();
 	ArrayList<properties> prop = new ArrayList<properties>();
+
 	ArrayList<boxes> b = new ArrayList<boxes>();
 	ArrayList<money> m = new ArrayList<money>();
 	JLabel money = new JLabel();
 
-
 	ArrayList<pieces> p = new ArrayList<pieces>();
 
-	int boardspace[] = {0, 0, 0, 0};
+	int boardspace[] = { 0, 0, 0, 0 };
 	int whichPlayer = 0;
 	Random r = new Random();
 
@@ -56,13 +58,19 @@ public class monopolySetup extends JPanel implements ActionListener {
 	int boxy[] = { 250, 250, 650, 650 };
 	JLabel moneys[] = new JLabel[4];
 	JLabel players[] = new JLabel[4];
+	
+	JLabel s = screen.propScreen;
+	
+	
 	JLabel boxes[] = { box.box, box.box, box.box, box.box };
 	JButton props[] = new JButton[4];
+	JButton x = screen.exit;
+	JLabel display = new JLabel();
 	String properties[] = { pro.prop, pro.prop, pro.prop, pro.prop };
-	Color playerColors[] = {Color.green, Color.blue, Color.yellow, Color.red};
+	Color playerColors[] = { Color.green, Color.blue, Color.yellow, Color.red };
 	JLabel owned[] = new JLabel[4];
-	int playerOffsetX[] = {0, 75, 0, 75};
-	int playerOffsetY[] = {0, 0, 75, 75};
+	int playerOffsetX[] = { 0, 75, 0, 75 };
+	int playerOffsetY[] = { 0, 0, 75, 75 };
 	int cash[] = { 1500, 1500, 1500, 1500 };
 
 	@Override
@@ -77,9 +85,10 @@ public class monopolySetup extends JPanel implements ActionListener {
 		frame.add(this);
 		this.setLayout(null);
 		this.add(button);
+		this.add(display);
+		this.add(x);
 		button.setBounds(450, 475, 150, 75);
-		
-		button.setText("player " + (whichPlayer+1) + ": roll");
+		button.setText("player " + (whichPlayer + 1) + ": roll");
 		button.addActionListener(this);
 		for (int i = 0; i < 4; i++) {
 			boxes[i] = new JLabel();
@@ -98,12 +107,12 @@ public class monopolySetup extends JPanel implements ActionListener {
 			moneys[i].setText("money: " + cash[i]);
 			props[i].setBounds(boxx[i], boxy[i] + 25, 70, 20);
 			props[i].setText("properties");
-			players[i].setBounds(boardx[boardspace[i]] +  playerOffsetX[i], boardy[boardspace[i]] + playerOffsetY[i], 25, 25);
+			props[i].addActionListener(this);
+			players[i].setBounds(boardx[boardspace[i]] + playerOffsetX[i], boardy[boardspace[i]] + playerOffsetY[i], 25, 25);
 			players[i].setOpaque(true);
 			players[i].setBackground(playerColors[i]);
 
 		}
-
 
 		for (int i = 0; i < 36; i++) {
 			tiles[i] = new Tile(cost[i], names[i], new Color(0), true, boardx[i], boardy[i]);
@@ -126,20 +135,21 @@ public class monopolySetup extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == button) {
-			
+
 			int ran = r.nextInt(12) + 1;
-			
+
 			boardspace[whichPlayer] += ran;
 			boardspace[whichPlayer] %= 36;
-			players[whichPlayer].setBounds(boardx[boardspace[whichPlayer]] +  playerOffsetX[whichPlayer], boardy[boardspace[whichPlayer]] + playerOffsetY[whichPlayer], 25, 25);
+			players[whichPlayer].setBounds(boardx[boardspace[whichPlayer]] + playerOffsetX[whichPlayer],
+					boardy[boardspace[whichPlayer]] + playerOffsetY[whichPlayer], 25, 25);
 
 			if (cost[boardspace[whichPlayer]] != 0) {
-				String buying = JOptionPane
-						.showInputDialog("buy " + names[boardspace[whichPlayer]] + " for " + cost[boardspace[whichPlayer]] + " dollars?");
+				String buying = JOptionPane.showInputDialog("buy " + names[boardspace[whichPlayer]] + " for "
+						+ cost[boardspace[whichPlayer]] + " dollars?");
 
 				if (buying.equals("yes")) {
-			cash[whichPlayer]-=cost[boardspace[whichPlayer]];
-			moneys[whichPlayer].setText("money: " + cash[whichPlayer]);
+					cash[whichPlayer] -= cost[boardspace[whichPlayer]];
+					moneys[whichPlayer].setText("money: " + cash[whichPlayer]);
 					money.setText("money: " + cash);
 
 				}
@@ -147,16 +157,32 @@ public class monopolySetup extends JPanel implements ActionListener {
 
 			System.out.println(boardspace[whichPlayer]);
 			play.p.piece.setBounds(boardx[boardspace[whichPlayer]], boardy[boardspace[whichPlayer]], 25, 25);
-			if(whichPlayer<3) {
+			if (whichPlayer < 3) {
 				whichPlayer++;
 			} else {
 				whichPlayer = 0;
 			}
-			
-			button.setText("player " + (whichPlayer+1) + ": roll");
+
+			button.setText("player " + (whichPlayer + 1) + ": roll");
 		}
-		if(arg0.getSource() == props) {
-			
+		for(int i = 0; i<4; i++) {
+		if (arg0.getSource() == props[i]) {
+			this.add(display);
+			System.out.println("hello world!");
+			x.setVisible(true);
+			x.setBounds(410, 235, 50, 50);
+			x.setText("X");
+			display.setVisible(true);
+			display.setBackground(Color.lightGray);
+			display.setBounds(400, 225, 300, 600);
+
+			display.setOpaque(true);
 		}
+		}
+		if(arg0.getSource() == x) {
+			display.setVisible(false);
+		x.setVisible(false);
+		}
+	
 	}
 }
