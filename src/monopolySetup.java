@@ -87,6 +87,13 @@ PropertyDisplay screen = new PropertyDisplay();
 		this.add(button);
 		this.add(display);
 		this.add(x);
+		x.setVisible(false);
+		x.setOpaque(true);
+		x.setBounds(410, 235, 50, 50);
+		x.setText("X");
+		x.addActionListener(this);
+		display.setBackground(Color.lightGray);
+		display.setBounds(400, 225, 300, 600);
 		button.setBounds(450, 475, 150, 75);
 		button.setText("player " + (whichPlayer + 1) + ": roll");
 		button.addActionListener(this);
@@ -168,14 +175,10 @@ PropertyDisplay screen = new PropertyDisplay();
 		for(int i = 0; i<4; i++) {
 		if (arg0.getSource() == props[i]) {
 			this.add(display);
+			this.add(x);
 			System.out.println("hello world!");
 			x.setVisible(true);
-			x.setBounds(410, 235, 50, 50);
-			x.setText("X");
 			display.setVisible(true);
-			display.setBackground(Color.lightGray);
-			display.setBounds(400, 225, 300, 600);
-
 			display.setOpaque(true);
 		}
 		}
