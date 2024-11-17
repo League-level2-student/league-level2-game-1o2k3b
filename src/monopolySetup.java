@@ -25,7 +25,10 @@ PropertyDisplay screen = new PropertyDisplay();
 	ArrayList<boxes> b = new ArrayList<boxes>();
 	ArrayList<money> m = new ArrayList<money>();
 	JLabel money = new JLabel();
-
+int oneSpacing = 0;
+int twoSpacing = 0;
+int threeSpacing = 0;
+int fourSpacing = 0;
 	ArrayList<pieces> p = new ArrayList<pieces>();
 
 	int boardspace[] = { 0, 0, 0, 0 };
@@ -68,7 +71,11 @@ PropertyDisplay screen = new PropertyDisplay();
 	JLabel display = new JLabel();
 	String properties[] = { pro.prop, pro.prop, pro.prop, pro.prop };
 	Color playerColors[] = { Color.green, Color.blue, Color.yellow, Color.red };
-	JLabel owned[] = new JLabel[4];
+	JLabel oneDisplay[] = new JLabel[24];
+	JLabel twoDisplay[] = new JLabel[24];
+	JLabel threeDisplay[] = new JLabel[24];
+	JLabel fourDisplay[] = new JLabel[24];
+
 	int playerOffsetX[] = { 0, 75, 0, 75 };
 	int playerOffsetY[] = { 0, 0, 75, 75 };
 	int cash[] = { 1500, 1500, 1500, 1500 };
@@ -80,19 +87,46 @@ PropertyDisplay screen = new PropertyDisplay();
 	}
 
 	public void setup() {
+		
 		frame.setSize(1000, 1050);
 		frame.setVisible(true);
 		frame.add(this);
 		this.setLayout(null);
-		this.add(button);
-		this.add(display);
 		this.add(x);
+		for(int i = 0; i<24; i++) {
+		oneDisplay[i] = new JLabel();
+		this.add(oneDisplay[i]);
+		oneDisplay[i].setText("");
+		oneDisplay[i].setVisible(false);
+		oneDisplay[i].setFont(new Font("Times New Roman", Font.BOLD, 22));
+		
+		twoDisplay[i] = new JLabel();
+		this.add(twoDisplay[i]);
+		twoDisplay[i].setText("");
+		twoDisplay[i].setVisible(false);
+		twoDisplay[i].setFont(new Font("Times New Roman", Font.BOLD, 22));
+		
+		threeDisplay[i] = new JLabel();
+		this.add(threeDisplay[i]);
+		threeDisplay[i].setText("");
+		threeDisplay[i].setVisible(false);
+		threeDisplay[i].setFont(new Font("Times New Roman", Font.BOLD, 22));
+		
+		fourDisplay[i] = new JLabel();
+		this.add(fourDisplay[i]);
+		fourDisplay[i].setText("");
+		fourDisplay[i].setVisible(false);
+		fourDisplay[i].setFont(new Font("Times New Roman", Font.BOLD, 22));
+		}
+		this.add(display);
+		this.add(button);
 		x.setVisible(false);
 		x.setOpaque(true);
 		x.setBounds(410, 235, 50, 50);
 		x.setText("X");
 		x.addActionListener(this);
 		display.setBackground(Color.lightGray);
+		display.setVisible(false);
 		display.setBounds(400, 225, 300, 600);
 		button.setBounds(450, 475, 150, 75);
 		button.setText("player " + (whichPlayer + 1) + ": roll");
@@ -159,6 +193,31 @@ PropertyDisplay screen = new PropertyDisplay();
 					moneys[whichPlayer].setText("money: " + cash[whichPlayer]);
 					money.setText("money: " + cash);
 
+					if(whichPlayer == 0) {
+						oneDisplay[oneSpacing].setBounds(400, 300+(oneSpacing*30), 300, 50);
+						oneDisplay[oneSpacing].setText(names[boardspace[0]] + " ");
+						oneSpacing++;
+						
+					}
+					if(whichPlayer == 1) {
+						twoDisplay[twoSpacing].setBounds(400, 300+(twoSpacing*30), 300, 50);
+						twoDisplay[twoSpacing].setText(names[boardspace[1]] + " ");	
+						twoSpacing++;
+						
+					}
+					if(whichPlayer == 2) {
+						threeDisplay[threeSpacing].setBounds(400, 300+(threeSpacing*30), 300, 50);
+						threeDisplay[threeSpacing].setText(names[boardspace[2]] + " ");	
+						threeSpacing++;
+						
+					}
+					if(whichPlayer == 3) {
+						fourDisplay[fourSpacing].setBounds(400, 300+(fourSpacing*30), 300, 50);
+						fourDisplay[fourSpacing].setText(names[boardspace[3]] + " ");	
+						fourSpacing++;
+					
+					}
+					
 				}
 			}
 
@@ -174,17 +233,42 @@ PropertyDisplay screen = new PropertyDisplay();
 		}
 		for(int i = 0; i<4; i++) {
 		if (arg0.getSource() == props[i]) {
-			this.add(display);
-			this.add(x);
 			System.out.println("hello world!");
 			x.setVisible(true);
 			display.setVisible(true);
 			display.setOpaque(true);
 		}
+		if(arg0.getSource() == props[0]) {
+			for(int t = 0; t<24; t++) {
+				oneDisplay[t].setVisible(true);
+				}
+		}
+		if(arg0.getSource() == props[1]) {
+			for(int t = 0; t<24; t++) {
+				twoDisplay[t].setVisible(true);
+				}
+		}
+		if(arg0.getSource() == props[2]) {
+			for(int t = 0; t<24; t++) {
+				threeDisplay[t].setVisible(true);
+				}
+		}
+		if(arg0.getSource() == props[3]) {
+			for(int t = 0; t<24; t++) {
+				fourDisplay[t].setVisible(true);
+				}
+		}
 		}
 		if(arg0.getSource() == x) {
 			display.setVisible(false);
+			for(int t = 0; t<24; t++) {
+				oneDisplay[t].setVisible(false);
+				twoDisplay[t].setVisible(false);
+				threeDisplay[t].setVisible(false);
+				fourDisplay[t].setVisible(false);
+				}
 		x.setVisible(false);
+		
 		}
 	
 	}
