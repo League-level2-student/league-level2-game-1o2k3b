@@ -17,7 +17,7 @@ public class monopolySetup extends JPanel implements ActionListener {
 	pieces piece = new pieces(new JLabel());
 	properties pro = new properties("");
 PropertyDisplay screen = new PropertyDisplay();
-
+boolean buyable = false;
 	players play = new players(piece, pro, box, mo, screen);
 	JFrame frame = new JFrame();
 	ArrayList<properties> prop = new ArrayList<properties>();
@@ -70,7 +70,7 @@ int fourSpacing = 0;
 	JButton x = screen.exit;
 	JLabel display = new JLabel();
 	String properties[] = { pro.prop, pro.prop, pro.prop, pro.prop };
-	Color playerColors[] = { Color.green, Color.blue, Color.yellow, Color.red };
+	Color playerColors[] = { new Color(1, 68, 33), new Color(25, 25, 122), new Color(255, 223, 0), new Color(217, 33, 33) };
 	JLabel oneDisplay[] = new JLabel[24];
 	JLabel twoDisplay[] = new JLabel[24];
 	JLabel threeDisplay[] = new JLabel[24];
@@ -152,6 +152,7 @@ int fourSpacing = 0;
 			players[i].setBounds(boardx[boardspace[i]] + playerOffsetX[i], boardy[boardspace[i]] + playerOffsetY[i], 25, 25);
 			players[i].setOpaque(true);
 			players[i].setBackground(playerColors[i]);
+			players[i].setBorder(BorderFactory.createLineBorder(Color.black, 2));
 
 		}
 
@@ -183,8 +184,104 @@ int fourSpacing = 0;
 			boardspace[whichPlayer] %= 36;
 			players[whichPlayer].setBounds(boardx[boardspace[whichPlayer]] + playerOffsetX[whichPlayer],
 					boardy[boardspace[whichPlayer]] + playerOffsetY[whichPlayer], 25, 25);
+			if(names[boardspace[whichPlayer]] == "chance") {
+				int goodOrBad = r.nextInt(2);
+				if(goodOrBad == 0) {
+					cash[whichPlayer]-=r.nextInt(200);
+				}
+				if(goodOrBad== 1) {
+					cash[whichPlayer]-=r.nextInt(175);
+				}
+			}
+			if(names[boardspace[whichPlayer]] == "community chest") {
+				int goodOrBad = r.nextInt(2);
+				if(goodOrBad == 0) {
+					cash[whichPlayer]-=r.nextInt(150);
+				}
+				if(goodOrBad== 1) {
+					cash[whichPlayer]-=r.nextInt(100);
+				}
+			}
+if(whichPlayer == 1) {
+			for(int i = 0; i<24; i++) {
+	if(names[boardspace[whichPlayer]].equals(twoDisplay[i].getText())){
+		cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+		buyable = false;
+	}
+	else if(names[boardspace[whichPlayer]].equals(threeDisplay[i].getText())){
+		cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+		buyable = false;
+	}
+	else if(names[boardspace[whichPlayer]].equals(fourDisplay[i].getText())){
+		cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+		buyable = false;
+	}
+	else {
+		buyable = true;
+	}
+}
+}
+if(whichPlayer == 2) {
+	for(int i = 0; i<24; i++) {
+if(names[boardspace[whichPlayer]].equals(twoDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(threeDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(fourDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else {
+buyable = true;
+}
+}
+}
+if(whichPlayer == 3) {
+	for(int i = 0; i<24; i++) {
+if(names[boardspace[whichPlayer]].equals(twoDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(threeDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(fourDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else {
+buyable = true;
+}
+}
+}
+if(whichPlayer == 4) {
+	for(int i = 0; i<24; i++) {
+if(names[boardspace[whichPlayer]].equals(twoDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(threeDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else if(names[boardspace[whichPlayer]].equals(fourDisplay[i].getText())){
+cash[whichPlayer]-=(boardspace[whichPlayer]/8);
+buyable = false;
+}
+else {
+buyable = true;
+System.out.println(buyable);
+}
+}
+}
 
-			if (cost[boardspace[whichPlayer]] != 0) {
+			
+			if (cost[boardspace[whichPlayer]] != 0 && buyable == true) {
 				String buying = JOptionPane.showInputDialog("buy " + names[boardspace[whichPlayer]] + " for "
 						+ cost[boardspace[whichPlayer]] + " dollars?");
 
@@ -195,31 +292,32 @@ int fourSpacing = 0;
 
 					if(whichPlayer == 0) {
 						oneDisplay[oneSpacing].setBounds(400, 300+(oneSpacing*30), 300, 50);
-						oneDisplay[oneSpacing].setText(names[boardspace[0]] + " ");
+						oneDisplay[oneSpacing].setText(names[boardspace[0]] + "");
 						oneSpacing++;
-						
 					}
 					if(whichPlayer == 1) {
 						twoDisplay[twoSpacing].setBounds(400, 300+(twoSpacing*30), 300, 50);
-						twoDisplay[twoSpacing].setText(names[boardspace[1]] + " ");	
+						twoDisplay[twoSpacing].setText(names[boardspace[1]] + "");	
 						twoSpacing++;
 						
 					}
 					if(whichPlayer == 2) {
 						threeDisplay[threeSpacing].setBounds(400, 300+(threeSpacing*30), 300, 50);
-						threeDisplay[threeSpacing].setText(names[boardspace[2]] + " ");	
+						threeDisplay[threeSpacing].setText(names[boardspace[2]] + "");	
 						threeSpacing++;
 						
 					}
 					if(whichPlayer == 3) {
 						fourDisplay[fourSpacing].setBounds(400, 300+(fourSpacing*30), 300, 50);
-						fourDisplay[fourSpacing].setText(names[boardspace[3]] + " ");	
+						fourDisplay[fourSpacing].setText(names[boardspace[3]] + "");	
 						fourSpacing++;
-					
 					}
 					
 				}
+			} else if(buyable == false) {
+				JOptionPane.showMessageDialog(null, "you paid" + cash[whichPlayer]/8);
 			}
+		
 
 			System.out.println(boardspace[whichPlayer]);
 			play.p.piece.setBounds(boardx[boardspace[whichPlayer]], boardy[boardspace[whichPlayer]], 25, 25);
