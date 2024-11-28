@@ -2,16 +2,16 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
-public class players {
+public class Player {
 pieces p;
 money m;
-properties prop;
+Property prop;
 boxes b;
 PropertyDisplay propD;
 JLabel propDisplay[] = new JLabel[4];
 
 
-	players(pieces p, properties prop, boxes b, money m, PropertyDisplay propD) {
+	Player(pieces p, Property prop, boxes b, money m, PropertyDisplay propD) {
 		for(int i = 0; i<4; i++) {
 		this.p = p;
 		this.prop = prop;

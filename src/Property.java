@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class properties {
+public class Property {
 String prop;
-	properties(String prop) {
+	Property(String prop) {
 		this.prop = prop;
 	}
 }
