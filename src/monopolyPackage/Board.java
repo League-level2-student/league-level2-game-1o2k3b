@@ -1,14 +1,20 @@
 package monopolyPackage;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements ActionListener {
+	
 	static final String names[] = { "go", "baltic", "chest", "medditaranian", "income tax", "oriental", "chance",
 			"vermont", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia", "st.James Place",
 			"chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic",
@@ -31,19 +37,35 @@ public class Board extends JPanel {
 	static final int boardY[] = { 900, 900, 900, 900, 900, 900, 900, 900, 900, 900, 800, 700, 600, 500, 400, 300, 200,
 			100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 200, 300, 400, 500, 600, 700, 800 };
 
-	final ArrayList<Tile> tiles = new ArrayList<>();
-	final ArrayList<Player> players = new ArrayList<>();
+	Color pColor[] = {Color.red, Color.pink, Color.cyan, Color.blue};
+	static final ArrayList<Tile> tiles = new ArrayList<>();
+	static final ArrayList<Player> players = new ArrayList<>();
+	Turn turn = new Turn();
 	final JFrame frame = new JFrame();
+	JButton button = new JButton();
 
 	public Board() {
 		for (int i = 0; i < names.length; i++) {
 			tiles.add(new Tile(colors[i], names[i], boardX[i], boardY[i]));
 		}
+		for(int i = 0; i<4; i++) {
+			players.add(new Player(JOptionPane.showInputDialog("what will be your name Player " + (i+1) + "?"), pColor[i], i));
+			
+		}
 		frame.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(1000, 1000));
+		this.setLayout(null);
 		frame.pack();
 		frame.setVisible(true);
+		this.add(button);
+		button.setBounds(400, 450, 200, 100);
+		button.setOpaque(true);
+		button.setBackground(Color.LIGHT_GRAY);
+		button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
+		button.addActionListener(this);
+		
+		
 
 
 	}
@@ -52,6 +74,16 @@ public class Board extends JPanel {
 for(Tile tile:tiles) {
 	tile.draw(g);
 }
-
+for(Player play:players) {
+play.draw(g);
+}
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		//runs the turn system within the turn class
+		turn.roll();
+		button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
+		
 	}
 }
