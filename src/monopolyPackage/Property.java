@@ -6,11 +6,12 @@ import java.awt.Graphics;
 public class Property extends Tile {
 	
 	int cost;
-
+ int owner;
 	public Property(Color color, String name, int cost, int xPos, int yPos) {
 		super(color, name, xPos, yPos);
 		// TODO Auto-generated constructor stub
 		this.cost = cost;
+		owner = -1;
 	}
 	
 	@Override

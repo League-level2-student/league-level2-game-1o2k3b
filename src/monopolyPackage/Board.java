@@ -101,10 +101,19 @@ play.draw(g);
 			repaint();
 		} else {
 			turn.roll();
-			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 			
+			if(tiles.get(players.get(turn.whichPlayer).currentTile) instanceof Property) {
+				// TODO: if not owned by anyone....
+				if( ( (Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner == -1)
+				turn.purchase();
+			}else {
+				// find out which tile it is an perform the right action... 
+				
+			}
+			turn.updateWhichPlayer();
+			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 		}
-		
+		//TODO:.. land on Jail... skip it?
 		
 	}
 }
