@@ -61,7 +61,12 @@ public void draw(Graphics g) {
 public void actionPerformed(ActionEvent arg0) {
 	// TODO Auto-generated method stub
 	if(arg0.getSource()==propertyButton) {
-		JOptionPane.showMessageDialog(null, "");
+		String propertyString = "";
+		for(Property p:properties) {
+			propertyString+=p.name + "\n";
+		}
+
+		JOptionPane.showMessageDialog(null, propertyString);
 	}
 }
 

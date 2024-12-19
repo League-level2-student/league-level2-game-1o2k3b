@@ -16,20 +16,33 @@ public class Turn {
 
 		Board.players.get(whichPlayer).currentTile %= 36;
 
+	}
 
+	public void pay() {
+		Player tempPlay = Board.players.get(whichPlayer);
+		Property tempProp = ((Property) Board.tiles.get(tempPlay.currentTile));
+		tempPlay.money -= tempProp.cost/8;
+		 Board.players.get(tempProp.owner).money += tempProp.cost/8;
+		JOptionPane.showMessageDialog(null, "you paid " + Board.players.get(tempProp.owner).name + " $" + tempProp.cost/8 + " because you landed on " + tempProp.name);
 	}
 
 	public void purchase() {
-		String checker = JOptionPane.showInputDialog("would you like to buy " + Board.names[Board.players.get(whichPlayer).currentTile]);
-		if(checker.equalsIgnoreCase("yes")) {
-			((Property)Board.tiles.get(Board.players.get(whichPlayer).currentTile)).owner = whichPlayer;
-			System.out.println(((Property)Board.tiles.get(Board.players.get(whichPlayer).currentTile)).owner);
+		String checker = JOptionPane
+				.showInputDialog("would you like to buy " + Board.names[Board.players.get(whichPlayer).currentTile]);
+		if (checker.equalsIgnoreCase("yes")) {
+			Player tempPlay = Board.players.get(whichPlayer);
+			Property tempProp = ((Property) Board.tiles.get(tempPlay.currentTile));
+			if (tempPlay.money > tempProp.cost) {
+				tempProp.owner = whichPlayer;
+				tempPlay.money -= tempProp.cost;
+				tempPlay.properties.add(tempProp);
+			}
 		}
 	}
 
 	public void updateWhichPlayer() {
 		// TODO Auto-generated method stub
 		whichPlayer++;
-		whichPlayer %= 4;	
+		whichPlayer %= 4;
 	}
 }

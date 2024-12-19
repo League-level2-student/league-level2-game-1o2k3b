@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-	
+
 	static final String names[] = { "go", "baltic", "chest", "medditaranian", "income tax", "oriental", "chance",
 			"vermont", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia", "st.James Place",
 			"chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic",
@@ -37,28 +37,30 @@ public class Board extends JPanel implements ActionListener {
 			300, 400, 500, 600, 700, 800, 900, 900, 900, 900, 900, 900, 900, 900, 900 };
 	static final int boardY[] = { 900, 900, 900, 900, 900, 900, 900, 900, 900, 900, 800, 700, 600, 500, 400, 300, 200,
 			100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 200, 300, 400, 500, 600, 700, 800 };
-	Color pColor[] = {Color.red, Color.pink, Color.cyan, Color.blue};
+	Color pColor[] = { Color.red, Color.pink, Color.cyan, Color.blue };
 	static final ArrayList<Tile> tiles = new ArrayList<>();
 	static final ArrayList<Player> players = new ArrayList<>();
 	static Turn turn = new Turn();
 	final JFrame frame = new JFrame();
 	JButton button = new JButton();
-	Timer time = new Timer(1000/60, this);
-	
-static Board bInstance;
+	Timer time = new Timer(1000 / 60, this);
+
+	static Board bInstance;
+
 	public Board() {
 		bInstance = this;
 		for (int i = 0; i < names.length; i++) {
-			if(cost[i]==0) {
+			if (cost[i] == 0) {
 				tiles.add(new Tile(colors[i], names[i], boardX[i], boardY[i]));
 			} else {
 				tiles.add(new Property(colors[i], names[i], cost[i], boardX[i], boardY[i]));
 			}
-	
+
 		}
-		for(int i = 0; i<4; i++) {
-			players.add(new Player(JOptionPane.showInputDialog("what will be your name Player " + (i+1) + "?"), pColor[i], i));
-			
+		for (int i = 0; i < 4; i++) {
+			players.add(new Player(JOptionPane.showInputDialog("what will be your name Player " + (i + 1) + "?"),
+					pColor[i], i));
+
 		}
 		frame.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,48 +74,49 @@ static Board bInstance;
 		button.setBackground(Color.LIGHT_GRAY);
 		button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 		button.addActionListener(this);
-		
-		
 
-time.start();
+		time.start();
 	}
-	
+
 	static public Board getBoard() {
 		return bInstance;
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
-for(Tile tile:tiles) {
-	tile.draw(g);
-}
-for(Player play:players) {
-play.draw(g);
+		for (Tile tile : tiles) {
+			tile.draw(g);
+		}
+		for (Player play : players) {
+			play.draw(g);
 
-}
+		}
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		//runs the turn system within the turn class
-	
-		if(arg0.getSource() == time) {
+		// runs the turn system within the turn class
+
+		if (arg0.getSource() == time) {
 			repaint();
 		} else {
 			turn.roll();
-			
-			if(tiles.get(players.get(turn.whichPlayer).currentTile) instanceof Property) {
+
+			if (tiles.get(players.get(turn.whichPlayer).currentTile) instanceof Property) {
 				// TODO: if not owned by anyone....
-				if( ( (Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner == -1)
-				turn.purchase();
-			}else {
-				// find out which tile it is an perform the right action... 
-				
+				if (((Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner == -1) {
+					turn.purchase();
+				}
+			else if (((Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner != Turn.whichPlayer) {
+				// find out which tile it is an perform the right action...
+				turn.pay();
 			}
-			turn.updateWhichPlayer();
+			}
+				turn.updateWhichPlayer();
 			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 		}
-		//TODO:.. land on Jail... skip it?
-		
+		// TODO:.. land on Jail... skip it?
+
 	}
 }
