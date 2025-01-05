@@ -52,7 +52,7 @@ public void draw(Graphics g) {
 		g.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		g.drawString("money: " + money , boxX[playerNumber], boxY[playerNumber]+40);
 		g.setFont(new Font("Times New Roman", Font.BOLD, 25));
-		g.drawString("player " + name, boxX[playerNumber], boxY[playerNumber]+20);
+		g.drawString(name, boxX[playerNumber], boxY[playerNumber]+20);
 	
 	num++;
 }

@@ -17,7 +17,7 @@ import javax.swing.Timer;
 public class Board extends JPanel implements ActionListener {
 
 	static final String names[] = { "go", "baltic", "chest", "medditaranian", "income tax", "oriental", "chance",
-			"vermont", "conneticut", "jail", "st.Charles", "electric company", "states", "virginia", "st.James Place",
+			"vermont", "conneticut", "jail", "st.Charles", "electrical", "states", "virginia", "st.James Place",
 			"chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic",
 			"ventnor", "water Works", "marvin Gardens", "go to jail", "pacific", "north Carolina", "chest",
 			"Pensylvania", "chance", "park place", "luxury tax", "boardwalk" };
@@ -107,13 +107,23 @@ public class Board extends JPanel implements ActionListener {
 				// TODO: if not owned by anyone....
 				if (((Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner == -1) {
 					turn.purchase();
+				} else if (((Property) tiles
+						.get(players.get(turn.whichPlayer).currentTile)).owner != Turn.whichPlayer) {
+					// find out which tile it is an perform the right action...
+					turn.pay();
 				}
-			else if (((Property) tiles.get(players.get(turn.whichPlayer).currentTile)).owner != Turn.whichPlayer) {
-				// find out which tile it is an perform the right action...
-				turn.pay();
+
 			}
+			if (tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("chance")) {
+				turn.chance();
 			}
-				turn.updateWhichPlayer();
+			if (tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("chest")) {
+				turn.chest();
+			}
+			if(tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("income tax") || tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("luxury tax")) {
+				turn.tax();
+			}
+			turn.updateWhichPlayer();
 			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 		}
 		// TODO:.. land on Jail... skip it?
