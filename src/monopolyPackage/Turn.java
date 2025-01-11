@@ -53,18 +53,19 @@ public class Turn {
 		Player tempPlay = Board.players.get(whichPlayer);
 		int check = r.nextInt(9) + 1;
 		if (check < 4) {
-			tempPlay.money -= check * 25;
+			tempPlay.money -= check * 30;
 			JOptionPane.showMessageDialog(null, "oh no! you lost $" + check*30);
 		}
 		if (3 < check && check < 7) {
 			String chooser = JOptionPane.showInputDialog("choose who to steal 50 dollars from, enter 1, 2, 3, or 4");
 			int choose = Integer.parseInt(chooser);
+			choose-=1;
 			Board.players.get(choose).money-=50;
 			tempPlay.money+=50;
-			JOptionPane.showMessageDialog(null, "congrats! you stole $50 from " + choose);
+			JOptionPane.showMessageDialog(null, "congrats! you stole $50 from " + (choose+1));
 		}
 		if (check > 6) {
-			tempPlay.money += check * 50;
+			tempPlay.money += (check-6) * 50;
 			JOptionPane.showMessageDialog(null, "congrats! you gained $" + (check-6) *50);
 		}
 	}
@@ -97,16 +98,16 @@ public class Turn {
 		whichPlayer %= 4;
 	}
 //TODO: split this into the two tax methods..
-	public void tax() {
+	public void incomeTax() {
 		System.out.println("tax");
 		Player tempPlay = Board.players.get(whichPlayer);
-		if(tempPlay.name.equals("income tax")) {
 			tempPlay.money-=200;
 			JOptionPane.showMessageDialog(null, "you landed on income tax and paid $200 for it");
-		}
-		if(tempPlay.name.equals("luxury tax")) {
+	}
+	public void luxuryTax() {
+		Player tempPlay = Board.players.get(whichPlayer);
 			tempPlay.money-=100;
 			JOptionPane.showMessageDialog(null, "you landed on luxury tax and paid $100 for it");
-		}
 	}
 }
+

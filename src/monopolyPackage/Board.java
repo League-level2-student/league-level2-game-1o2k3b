@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +23,10 @@ public class Board extends JPanel implements ActionListener {
 			"chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic",
 			"ventnor", "water Works", "marvin Gardens", "go to jail", "pacific", "north Carolina", "chest",
 			"Pensylvania", "chance", "park place", "luxury tax", "boardwalk" };
+	static Map<String, String[]> map = new HashMap<>();
+	static final String sets[][] = { {"baltic", "medditaranian"}, { "oriental", "vermont", "conneticut" }, {"st.Charles", "states", "virginia" },
+			{ "st.James Place", "tennessee", "new York" }, { "Kentucky", "Indiana", "Illinois" }, { "atlantic", "ventnor", "marvin Gardens"},
+			{ "pacific", "north Carolina", "Pensylvania" }, {"park place", "boardwalk" } };
 	static final int cost[] = { 0, 60, 0, 60, 0, 100, 0, 100, 120, 0, 140, 150, 140, 160, 180, 0, 180, 200, 0, 220, 0,
 			220, 240, 260, 260, 150, 280, 0, 300, 300, 0, 320, 0, 350, 0, 400 };
 	static final Color colors[] = { new Color(20, 120, 50), new Color(66, 40, 14), new Color(20, 80, 140),
@@ -31,8 +37,8 @@ public class Board extends JPanel implements ActionListener {
 			new Color(255, 0, 0), new Color(166, 111, 50), new Color(255, 0, 0), new Color(255, 0, 0),
 			new Color(214, 228, 24), new Color(214, 228, 24), new Color(246, 255, 105), new Color(214, 228, 24),
 			new Color(0, 50, 255), new Color(0, 255, 75), new Color(0, 255, 75), new Color(20, 80, 140),
-			new Color(0, 255, 75), new Color(166, 111, 50), new Color(0, 255, 20), new Color(125),
-			new Color(0, 255, 20) };
+			new Color(0, 255, 75), new Color(166, 111, 50), new Color(0, 0, 128), Color.blue,
+			new Color(0, 0, 128) };
 	static final int boardX[] = { 900, 800, 700, 600, 500, 400, 300, 200, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 200,
 			300, 400, 500, 600, 700, 800, 900, 900, 900, 900, 900, 900, 900, 900, 900 };
 	static final int boardY[] = { 900, 900, 900, 900, 900, 900, 900, 900, 900, 900, 800, 700, 600, 500, 400, 300, 200,
@@ -48,6 +54,18 @@ public class Board extends JPanel implements ActionListener {
 	static Board bInstance;
 
 	public Board() {
+		//TODO map.put("", sets[]);
+		map.put("Brown", sets[0]);
+		map.put("Light Blue", sets[1]);
+		map.put("Purple", sets[2]);
+		map.put("Orange", sets[3]);
+		map.put("Red", sets[4]);
+		map.put("Yellow", sets[5]);
+		map.put("Green", sets[6]);
+		map.put("Dark Blue", sets[7]);
+
+		
+		
 		bInstance = this;
 		for (int i = 0; i < names.length; i++) {
 			if (cost[i] == 0) {
@@ -120,13 +138,14 @@ public class Board extends JPanel implements ActionListener {
 			if (tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("chest")) {
 				turn.chest();
 			}
-			if(tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("income tax") || tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("luxury tax")) {
-				turn.tax();
+			if (tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("income tax")) {
+				turn.incomeTax();
 			}
 			turn.updateWhichPlayer();
 			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
 		}
-		// TODO:.. land on Jail... skip it?
 
 	}
+	// TODO:.. land on Jail... skip it?
+
 }

@@ -5,9 +5,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class Player implements ActionListener {
 ArrayList<Property> properties = new ArrayList<>(); 
@@ -20,6 +27,9 @@ int num = 0;
 int boxX[] = {250, 650, 250, 650};
 int boxY[] = {225, 225, 675, 675};
 JButton propertyButton = new JButton("properties");
+JButton houseButton = new JButton();
+ImageIcon  houseIcon;
+
 
 public Player(String name, Color color, int playerNumber) {
 	super();
@@ -30,6 +40,13 @@ public Player(String name, Color color, int playerNumber) {
 	propertyButton.setBounds(boxX[playerNumber], boxY[playerNumber]+65, 90, 35);
 	propertyButton.addActionListener(this);
 	Board.getBoard().add(propertyButton);
+
+	houseButton.setBounds(boxX[playerNumber]+114, boxY[playerNumber]+65, 35, 35);
+	houseButton.addActionListener(this);
+		houseIcon = new ImageIcon("src/monopolyPackage/house.jpg");
+	
+	houseButton.setIcon(houseIcon);
+	Board.getBoard().add(houseButton);
 }
 
 public void draw(Graphics g) {
@@ -59,15 +76,17 @@ public void draw(Graphics g) {
 
 @Override
 public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
 	if(arg0.getSource()==propertyButton) {
 		String propertyString = "";
 		for(Property p:properties) {
 			propertyString+=p.name + "\n";
 		}
-
+	
 		JOptionPane.showMessageDialog(null, propertyString);
+	} else {
+		//TODO:  JoptionPane.showOptionDialog
 	}
+	
 }
 
 
