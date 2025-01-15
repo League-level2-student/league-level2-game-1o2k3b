@@ -11,11 +11,14 @@ public class Turn {
 	static public void roll() {
 
 		// roll of the dice
-
+int i = Board.players.get(whichPlayer).currentTile;
 		Board.players.get(whichPlayer).currentTile += r.nextInt(9) + 2;
-
 		Board.players.get(whichPlayer).currentTile %= 36;
-
+		int x = Board.players.get(whichPlayer).currentTile;
+if(i>x) {
+	Board.players.get(whichPlayer).money+=200;
+	JOptionPane.showMessageDialog(null, "You passed go");
+}
 	}
 
 	public void pay() {
