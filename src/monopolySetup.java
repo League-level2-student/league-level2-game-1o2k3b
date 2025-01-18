@@ -263,7 +263,7 @@ public class monopolySetup extends JPanel implements ActionListener {
 //				}
 //			}
 
-			if (cost[boardspace[whichPlayer]] != 0 ) {
+			if (cost[boardspace[whichPlayer]] != 0) {
 				String buying = JOptionPane.showInputDialog("buy " + names[boardspace[whichPlayer]] + " for "
 						+ cost[boardspace[whichPlayer]] + " dollars?");
 
@@ -276,7 +276,7 @@ public class monopolySetup extends JPanel implements ActionListener {
 						oneDisplay[oneSpacing].setBounds(400, 300 + (oneSpacing * 30), 300, 50);
 						oneDisplay[oneSpacing].setText(names[boardspace[0]]);
 						oneSpacing++;
-					//	names[boardspace[whichPlayer]]
+						// names[boardspace[whichPlayer]]
 					}
 					if (whichPlayer == 1) {
 						twoDisplay[twoSpacing].setBounds(400, 300 + (twoSpacing * 30), 300, 50);

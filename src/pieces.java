@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class pieces {
-JLabel piece;
+	JLabel piece;
+
 	pieces(JLabel piece) {
-	this.piece = piece;
-}
+		this.piece = piece;
+	}
 }
