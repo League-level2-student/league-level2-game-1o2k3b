@@ -11,6 +11,8 @@ public class Turn {
 	static public void roll() {
 
 		// roll of the dice
+		if(Board.players.get(whichPlayer).money>0) {
+			
 		int i = Board.players.get(whichPlayer).currentTile;
 		Board.players.get(whichPlayer).currentTile += r.nextInt(9) + 2;
 		Board.players.get(whichPlayer).currentTile %= 36;
@@ -19,15 +21,20 @@ public class Turn {
 			Board.players.get(whichPlayer).money += 200;
 			JOptionPane.showMessageDialog(null, "You passed go");
 		}
+		} else {
+		whichPlayer++;
 	}
+	}
+	//
 
 	public void pay() {
 		Player tempPlay = Board.players.get(whichPlayer);
 		Property tempProp = ((Property) Board.tiles.get(tempPlay.currentTile));
-		tempPlay.money -= tempProp.cost / 8;
-		Board.players.get(tempProp.owner).money += tempProp.cost / 8;
+		tempPlay.money -= tempProp.cost * Math.pow(tempProp.houses + 1,2) / 8;
+		Board.players.get(tempProp.owner).money += tempProp.cost * Math.pow(tempProp.houses + 1,2) / 8;
 		JOptionPane.showMessageDialog(null, "you paid " + Board.players.get(tempProp.owner).name + " $"
-				+ tempProp.cost * (tempProp.houses + 1) / 8 + " because you landed on " + tempProp.name);
+				+ tempProp.cost * Math.pow(tempProp.houses + 1,2) / 8 + " because you landed on " + tempProp.name);
+
 	}
 
 	public void chance() {
@@ -89,6 +96,7 @@ public class Turn {
 				tempProp.owner = whichPlayer;
 				tempPlay.money -= tempProp.cost;
 				tempPlay.properties.add(tempProp);
+				tempProp.label.setBackground(tempPlay.color);
 
 				String[] set = Board.map.get(tempProp.color);
 

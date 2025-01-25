@@ -70,6 +70,9 @@ public class Player implements ActionListener {
 		if (playerNumber == 2 || playerNumber == 3) {
 			y += 70;
 		}
+		if(playerNumber == 0 || playerNumber == 1) {
+			y+=25;
+		}
 		g.fillRect(x, y, 30, 30);
 
 		g.setColor(Color.LIGHT_GRAY);
@@ -85,6 +88,11 @@ public class Player implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		Property tempProp;
+		if(Board.tiles.get(currentTile) instanceof Property) {
+		tempProp= ((Property) Board.tiles.get(currentTile));
+		}
+
 		if (arg0.getSource() == propertyButton) {
 			String propertyString = "";
 			for (Property p : properties) {
@@ -101,10 +109,12 @@ public class Player implements ActionListener {
 
 				int choice = JOptionPane.showOptionDialog(Board.frame, "which color set would you like to add to?", "",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, houseIcon, colors.toArray(), null);
+
 				int whichProp = JOptionPane.showOptionDialog(Board.frame,
 						"which property in this color set would you like to put a house on?", "",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, houseIcon,
 						Board.map.get(ownedSets.get(choice)), null);
+
 				String propName = Board.map.get(ownedSets.get(choice))[whichProp];
 				Property p = null;
 				for (int i = 0; i < 36; i++) {
@@ -112,12 +122,30 @@ public class Player implements ActionListener {
 						p = (Property) Board.tiles.get(i);
 					}
 				}
-				p.houses++;
+				if(p.houses<4) {
+					if(p.yPos == 0) {
+						p.houses++;
+						money-=150;
+					} else if(p.yPos == 900) {
+						p.houses++;
+						money-=50;
+					} 
+					if(p.xPos == 900) {
+						money-=200;
+						p.houses++;
+					} else if(p.xPos == 0) {
+						money-=100;
+						p.houses++;
+
+					}
+					p.label.setText("" + p.houses);
+
+				} else {
+					JOptionPane.showMessageDialog(null, "nice try!");
+				}
 
 			}
 
 		}
-
 	}
-
 }

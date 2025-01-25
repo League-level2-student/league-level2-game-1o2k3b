@@ -19,17 +19,17 @@ import javax.swing.Timer;
 public class Board extends JPanel implements ActionListener {
 
 	static final String names[] = { "go", "baltic", "chest", "medditaranian", "income tax", "oriental", "chance",
-			"vermont", "conneticut", "jail", "st.Charles", "electrical", "states", "virginia", "st.James Place",
+			"vermont", "conneticut", "jail", "st.Charles", "chance", "states", "virginia", "st.James Place",
 			"chest", "tennessee", "new York", "free Parking", "Kentucky", "chance", "Indiana", "Illinois", "atlantic",
-			"ventnor", "water Works", "marvin Gardens", "go to jail", "pacific", "north Carolina", "chest",
+			"ventnor", "chest", "marvin Gardens", "go to jail", "pacific", "north Carolina", "chest",
 			"Pensylvania", "chance", "park place", "luxury tax", "boardwalk" };
 	static Map<Color, String[]> map = new HashMap<>();
 	static final String sets[][] = { { "baltic", "medditaranian" }, { "oriental", "vermont", "conneticut" },
 			{ "st.Charles", "states", "virginia" }, { "st.James Place", "tennessee", "new York" },
 			{ "Kentucky", "Indiana", "Illinois" }, { "atlantic", "ventnor", "marvin Gardens" },
 			{ "pacific", "north Carolina", "Pensylvania" }, { "park place", "boardwalk" } };
-	static final int cost[] = { 0, 60, 0, 60, 0, 100, 0, 100, 120, 0, 140, 150, 140, 160, 180, 0, 180, 200, 0, 220, 0,
-			220, 240, 260, 260, 150, 280, 0, 300, 300, 0, 320, 0, 350, 0, 400 };
+	static final int cost[] = { 0, 60, 0, 60, 0, 100, 0, 100, 120, 0, 140, 0, 140, 160, 180, 0, 180, 200, 0, 220, 0,
+			220, 240, 260, 260, 0, 280, 0, 300, 300, 0, 320, 0, 350, 0, 400 };
 	static Map<Color, String> colorToString = new HashMap();
 
 	static final Color colors[] = { new Color(20, 120, 50), // go
@@ -43,7 +43,7 @@ public class Board extends JPanel implements ActionListener {
 			new Color(50, 168, 168), // light blue
 			new Color(255, 102, 0), // jail
 			new Color(202, 0, 202), // pink
-			new Color(255), // electric
+			new Color(166, 111, 50), // chance
 			new Color(202, 0, 202), // pink
 			new Color(202, 0, 202), // pink
 			new Color(253, 177, 0), // orange
@@ -57,7 +57,7 @@ public class Board extends JPanel implements ActionListener {
 			new Color(255, 0, 0), // red
 			new Color(214, 228, 24), // yellow
 			new Color(214, 228, 24), // yellow
-			new Color(246, 255, 105), // water works
+			new Color(20, 80, 140), // chest
 			new Color(214, 228, 24), // yellow
 			new Color(0, 50, 255), // go to jail
 			new Color(0, 255, 75), // green
@@ -176,6 +176,9 @@ public class Board extends JPanel implements ActionListener {
 			}
 			if (tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("income tax")) {
 				turn.incomeTax();
+			}
+			if(tiles.get(players.get(turn.whichPlayer).currentTile).name.equals("luxury tax")) {
+				turn.luxuryTax();
 			}
 			turn.updateWhichPlayer();
 			button.setText("player " + players.get(turn.whichPlayer).name + "'s turn.");
